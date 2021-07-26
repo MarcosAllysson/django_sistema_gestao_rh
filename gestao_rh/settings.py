@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'empresas.apps.EmpresasConfig',
     'funcionarios.apps.FuncionariosConfig',
     'departamentos.apps.DepartamentosConfig',
+    'documentos.apps.DocumentosConfig',
+    'registro_hora_extra.apps.RegistroHoraExtraConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
