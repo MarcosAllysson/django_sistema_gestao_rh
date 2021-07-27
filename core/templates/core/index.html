@@ -6,6 +6,23 @@
 {% endblock %}
 
 {% block main %}
-  <h1 class="display-5"> Jesus </h1>
-  <a href="{% url 'logout' %}"> Sair </a>
+    <h1 class="display-5"> Jesus </h1>
+    {% if usuario.is_authenticated %}
+        <a href="{% url 'logout' %}"> Sair </a>
+    {% else %}
+        <a href="{% url 'login' %}"> Logar </a>
+    {% endif %}
+
+    <hr>
+    <p>Welcome back: {{usuario}} | {{usuario.funcionario.nome}} </p>
+    <a href="#"> Gerenciar Funcionário </a>
+
+    <!-- Garantindo que o funcionário veja detalhes somente da empresa dele-->
+    {% if usuario.funcionario.empresa %}
+        <a href="{% url 'edit_empresa' usuario.funcionario.empresa.id %}"> Editar empresa </a>
+
+    {% else %}
+        <a href="{% url 'create_empresa' %}"> Criar empresa </a>
+
+    {% endif %}
 {% endblock %}

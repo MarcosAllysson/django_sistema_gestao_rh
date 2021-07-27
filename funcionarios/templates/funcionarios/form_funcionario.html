@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Editar Funcionário
+{% endblock %}
+
+{% block main %}
+    <h1 class="display-5"> Funcionário </h1>
+    <hr>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary"> Salvar </button>
+    </form>
+
+{% endblock %}
