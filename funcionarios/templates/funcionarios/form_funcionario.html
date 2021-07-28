@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap %}
 
 {% block title %}
   Editar Funcionário
@@ -11,8 +12,18 @@
 
     <form action="" method="post">
         {% csrf_token %}
-        {{form.as_p}}
+        {{form|bootstrap}}
         <button type="submit" class="btn btn-primary"> Salvar </button>
     </form>
+
+    <br>
+    <a href="{% url 'create_documento' object.id %}" class="btn btn-primary">Adicionar documento</a>
+
+    <!-- Listando todos os documentos desse funcionários -->
+    <h2 class="mt-3"> Documentos do {{object}} </h2>
+    {% for documento in object.documento_set.all %}
+        <!-- Acessando arquivo do funcionário pela url (shell) -->
+        <br>  <a href="{{documento.arquivo.url}}"> {{documento}} </a>
+    {% endfor %}
 
 {% endblock %}

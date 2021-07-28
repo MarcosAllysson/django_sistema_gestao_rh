@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap %}
 
 {% block title %}
   Criar Empresa
@@ -11,7 +12,7 @@
 
     <form action="" method="post">
         {% csrf_token %}
-        {{form.as_p}}
+        {{form|bootstrap}}
         <button type="submit" class="btn btn-primary"> Salvar </button>
     </form>
 {% endblock %}
