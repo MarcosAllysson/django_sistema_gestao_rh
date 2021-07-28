@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="display-5"> Jesus </h1>
+    <h1 class="display-5"> Gestão RH Core </h1>
     {% if usuario.is_authenticated %}
         <a href="{% url 'logout' %}"> Sair </a>
     {% else %}
@@ -14,8 +14,9 @@
     {% endif %}
 
     <hr>
-    <p>Welcome back: {{usuario}} | {{usuario.funcionario.nome}} </p>
-    <a href="#"> Gerenciar Funcionário </a>
+    <p>Usuário logado: {{usuario}} | {{usuario.funcionario.nome}} </p>
+    <a href="{% url 'list_funcionarios' %}"> Gerenciar Funcionário </a> <br>
+    <a href="{% url 'list_departamentos' %}"> Gerenciar Departamentos </a> <br>
 
     <!-- Garantindo que o funcionário veja detalhes somente da empresa dele-->
     {% if usuario.funcionario.empresa %}
@@ -23,6 +24,5 @@
 
     {% else %}
         <a href="{% url 'create_empresa' %}"> Criar empresa </a>
-
     {% endif %}
 {% endblock %}

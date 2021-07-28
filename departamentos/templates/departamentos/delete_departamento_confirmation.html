@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Deletar {{object}}
+{% endblock %}
+
+{% block main %}
+    <h1 class="display-5"> Deletar departamento </h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Quer mesmo deletar o departamento <b> {{object}} </b>? </p>
+        <button type="submit" class="btn btn-danger"> Sim </button>
+        <a href="{% url 'list_departamentos' %}"> <button type="submit" class="btn btn-warning"> Cancelar </button> </a>
+    </form>
+{% endblock %}

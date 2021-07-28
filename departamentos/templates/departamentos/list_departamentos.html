@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Departamentos
+{% endblock %}
+
+{% block main %}
+    <h1 class="display-5"> Departamentos </h1>
+    <a href="{% url 'create_departamento' %}"> <button class="btn btn-primary" type="button"> Novo departamento </button> </a>
+    <hr>
+
+    {% if object_list %}
+        {% for departamento in object_list %}
+            <p> <a href="{% url 'update_departamento' departamento.pk %}"> Nome: {{departamento.nome}} </a> </p>
+            <a href="{% url 'delete_departamento' departamento.pk %}"> Deletar </a>
+            <br>
+        {% endfor %}
+    {% else %}
+        <h2> Ainda não há departamentos cadastrados. </h2>
+    {% endif %}
+{% endblock %}

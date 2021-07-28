@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Deletar {{object}}
+{% endblock %}
+
+{% block main %}
+    <form action="" method="post" class="mt-5">
+        {% csrf_token %}
+        <p>Quer mesmo excluir o <b> {{object}} </b>? </p>
+        <button type="submit" class="btn btn-danger"> Sim </button>
+    </form>
+
+{% endblock %}

@@ -6,13 +6,14 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="display-5"> Funcionário </h1>
+    <h1 class="display-5"> Funcionários </h1>
+    <a href="{% url 'create_funcionario' %}" class="btn btn-info"> Cadastrar funcionário </a>
     <hr>
 
     {% for funcionario in object_list %}
-        <p> <a href="{% url 'update_funcionarios' funcionario.pk %}"> Nome: {{funcionario.nome}} </a> </p>
-        <p> Departamento: {{funcionario.departamento}} </p>
+        <p> <a href="{% url 'update_funcionario' funcionario.pk %}"> Nome: {{funcionario.nome}} </a> </p>
         <p> Empresa: {{funcionario.empresa}} </p>
+        <p> <a href="{% url 'delete_funcionario' funcionario.pk %}"> Deletar </a> </p>
         <br>
     {% endfor %}
 
