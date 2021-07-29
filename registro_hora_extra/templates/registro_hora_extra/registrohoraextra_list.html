@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Hora Extra
+{% endblock %}
+
+{% block main %}
+    <h1 class="display-5 mt-3"> Registro Hora Extra </h1>
+    <a href="{% url 'create_hora_extra' %}" class="btn btn-primary"> Cadastrar </a>
+    <hr>
+
+    {% if object_list %}
+        {% for registro_he in object_list %}
+            <p> <a href="{% url 'update_hora_extra' registro_he.pk %}"> Funcionário: {{registro_he.funcionario}} </a> </p>
+            <p> Motivo: {{registro_he.motivo}} </p>
+            <p> Horas: {{registro_he.horas}}h </p>
+            <!--<p> <a href="{% url 'delete_hora_extra' registro_he.pk %}"> Excluir </a> </p>-->
+            <br>
+        {% endfor %}
+    {% else %}
+        <h2> Ainda não há horas extras cadastrados. </h2>
+    {% endif %}
+{% endblock %}

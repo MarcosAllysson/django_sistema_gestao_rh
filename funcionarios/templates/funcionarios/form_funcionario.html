@@ -21,6 +21,7 @@
 
     <!-- Listando todos os documentos desse funcionários -->
     <h2 class="mt-3"> Documentos do {{object}} </h2>
+
     {% for documento in object.documento_set.all %}
         <!-- Acessando arquivo do funcionário pela url (shell) -->
         <br>  <a href="{{documento.arquivo.url}}"> {{documento}} </a>

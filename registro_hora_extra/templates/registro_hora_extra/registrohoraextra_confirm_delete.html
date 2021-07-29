@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block title %}
+  Hora Extra
+{% endblock %}
+
+{% block main %}
+    <h1 class="display-5"> Deletar Hora Extra </h1>
+    <hr>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form|bootstrap}}
+        <p>Quer mesmo deletar <b>{{object}}</b>? </p>
+        <button type="submit" class="btn btn-danger"> Deletar </button>
+        <button type="button" class="btn btn-warning"><a href="{% url 'list_hora_extra' %}"></a> Cancelar </button>
+    </form>
+
+{% endblock %}

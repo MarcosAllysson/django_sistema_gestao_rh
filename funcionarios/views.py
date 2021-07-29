@@ -13,7 +13,6 @@ class FuncionarioList(ListView):
         """
         Sobrescrevendo o método para que retorne apenas os objetos filtrados pela empresa
         no qual o funcionário cadastrou / trabalha.
-        :return:
         """
         empresa_logada = self.request.user.funcionario.empresa
         queryset = Funcionario.objects.filter(empresa=empresa_logada)
