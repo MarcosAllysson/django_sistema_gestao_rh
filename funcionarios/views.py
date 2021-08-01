@@ -1,7 +1,17 @@
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Funcionario
+
+# PDF with reportlab:
+import io
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+
+# PDF with xhtml2pdf:
+from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
 
 
 # Create your views here.
@@ -50,4 +60,75 @@ class FuncionarioCreate(CreateView):
         # Salvando funcionário
         funcionario.save()
         return super(FuncionarioCreate, self).form_valid(form)
+
+
+def pdf_reportlab(request):
+    response = HttpResponse(content_type='application/pdf')
+
+    # Baixar arquivo invés de abrir na página
+    response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Eixo X - Y começa no canto inferior esquerdo da página
+    # 10 representa da margem esquerda 10px
+    # 810 representa debaixo pra cima, no topo da página
+    p.drawString(250, 810, "Relatório de funcionários")
+
+    funcionarios = Funcionario.objects.filter(empresa=request.user.funcionario.empresa)
+    str_funcionario = 'Nome: %s'
+
+    y = 750
+    for funcionario in funcionarios:
+        p.drawString(10, y, str_funcionario % (funcionario.nome))
+        y -= 20
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    # return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+    return response
+
+
+class Render:
+    # Função base pra renderizar o PDF
+
+    @staticmethod
+    def render(path: str, params: dict, filename: str):
+        template = get_template(path)
+        html = template.render(params)
+        response = io.BytesIO()
+        pdf = pisa.pisaDocument(
+            io.BytesIO(html.encode('UTF-8')), response)
+
+        if not pdf.err:
+            response = HttpResponse(
+                response.getvalue(), content_type='application/pdf'
+            )
+            response['Content-Disposition'] = 'attachment;filename=%s.pdf' % filename
+            return response
+
+        else:
+            return HttpResponse('Error rendering pdf', status=400)
+
+
+class Pdf(View):
+    def get(self, request):
+        params = {
+            'today': "Variável today",
+            'sales': "Variável sales",
+            'request': request,
+        }
+        return Render.render('funcionarios/relatorio.html', params, 'myfile')
 

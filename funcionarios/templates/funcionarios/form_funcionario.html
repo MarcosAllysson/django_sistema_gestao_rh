@@ -21,6 +21,7 @@
     <br>
     <h2 class="mt-5"> Documentos do {{object}} </h2>
     <a href="{% url 'create_documento' object.id %}" class="btn btn-primary">Adicionar documento</a>
+
     <ul>
         {% for documento in object.documento_set.all %}
             <!-- Acessando arquivo do funcionário pela url (shell) -->
