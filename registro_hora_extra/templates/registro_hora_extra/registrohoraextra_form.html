@@ -14,6 +14,48 @@
         {% csrf_token %}
         {{form|bootstrap}}
         <button type="submit" class="btn btn-primary"> Salvar </button>
+
+        {% if object %}
+            <a href="{% url 'delete_hora_extra' object.id %}" class="btn btn-danger"> Deletar </a>
+
+            <!-- Ajax -->
+            <button onclick="utilizouHoraExtra({{object.id}})" class="btn btn-info" type="button"> Marcar como utilizado </button>
+        {% endif %}
     </form>
 
+    <!-- Horas extra do funcionário -->
+    <h2 id="horas_atualizadas"> {{object.funcionario.total_horas_extra}} </h2>
+
+    <!-- Resposta ajax -->
+    <p id="mensagem"> </p>
+
+    <!-- Ajax / Jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    {% comment %} <script src="{% static 'js/funcoes-ajax.js' %}"></script>  {% endcomment %}
+
+    <script>
+        function utilizouHoraExtra(id){
+            console.log("ID: " + id);
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "utilizou_hora_extra" object.id %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(result){
+                    $("#mensagem").text("Hora extra marcada como utilizada!");
+                    $("#horas_atualizadas").text(result.horas);
+                    
+                    //Corresponde ao response HttpResponse na View
+                    console.log(result.mensagem)
+                }
+            });
+        }
+    </script>
+
+
 {% endblock %}
+
+
+
