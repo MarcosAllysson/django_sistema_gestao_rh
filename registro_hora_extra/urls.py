@@ -4,7 +4,8 @@ from .views import (
     HoraExtraUpdate,
     HoraExtraDelete,
     HoraExtraCreate,
-    UtilizouHoraExtra
+    UtilizouHoraExtra,
+    ExportarCSV
 )
 
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path('editar/<int:pk>/', HoraExtraUpdate.as_view(), name='update_hora_extra'),
     path('utilizou-hora-extra/<int:pk>/', UtilizouHoraExtra.as_view(), name='utilizou_hora_extra'),
     path('deletar/<int:pk>/', HoraExtraDelete.as_view(), name='delete_hora_extra'),
+    path('exportar-csv/', ExportarCSV.as_view(), name='exportar_csv'),
 ]

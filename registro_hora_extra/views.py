@@ -7,6 +7,9 @@ from django.views.generic.list import ListView
 from .models import RegistroHoraExtra
 from .forms import RegistroHoraExtraForm
 
+# CSV
+import csv
+
 
 # Create your views here.
 class HoraExtraList(ListView):
@@ -71,3 +74,35 @@ class UtilizouHoraExtra(View):
 
         # Retornando HttpResponse
         return HttpResponse(response, content_type='application/json')
+
+
+class ExportarCSV(View):
+    """
+    Exportando CSV do registro de banco de horas
+    """
+
+    def get(self, request):
+        # Create the HttpResponse object with the appropriate CSV header.
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={'Content-Disposition': 'attachment; filename="somefilename.csv"'},
+        )
+
+        registro_hora_extra = RegistroHoraExtra.objects.filter(utilizada=False)
+
+        writer = csv.writer(response)
+
+        # Título das colunas (CABEÇALHO)
+        writer.writerow(['ID', 'Motivo', 'Funcionário', 'Horas restantes', 'Horas'])
+
+        # Iterando sobre as linhas
+        for registro in registro_hora_extra:
+            writer.writerow([
+                registro.id,
+                registro.motivo,
+                registro.funcionario,
+                registro.funcionario.total_horas_extra,
+                registro.horas
+            ])
+
+        return response
