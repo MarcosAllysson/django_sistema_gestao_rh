@@ -18,6 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Django rest framework
+from rest_framework import routers
+from core import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
 
 urlpatterns = [
     path('', include('core.urls')),
@@ -28,6 +36,10 @@ urlpatterns = [
     path('empresas/', include('empresas.urls')),
     path('departamentos/', include('departamentos.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+
+    # Django rest framework
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
