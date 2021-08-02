@@ -22,9 +22,15 @@ from django.conf.urls.static import static
 from rest_framework import routers
 from core import views
 
+# APIs
+from funcionarios.api.viewsets import FuncionarioViewSet
+from registro_hora_extra.api.viewsets import RegistroHoraExtraViewSet
+
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'api/funcionarios', FuncionarioViewSet)
+router.register(r'api/horas-extras', RegistroHoraExtraViewSet)
 
 
 urlpatterns = [
