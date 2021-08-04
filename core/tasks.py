@@ -2,6 +2,7 @@
 
 from celery import shared_task
 # from demoapp.models import Widget
+from django.core.mail import send_mail
 
 
 @shared_task
@@ -17,6 +18,19 @@ def mul(x, y):
 @shared_task
 def xsum(numbers):
     return sum(numbers)
+
+
+@shared_task
+def send_relatorio():
+    send_mail(
+        'Relatório celery',
+        'Relatório processado com celery',
+        'django@gmail.com',
+        ['contatodjango@gmail.com'],
+        fail_silently=False
+    )
+
+    return True
 
 
 # @shared_task
