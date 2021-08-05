@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'funcionarios.apps.FuncionariosConfig',
     'departamentos.apps.DepartamentosConfig',
     'documentos.apps.DocumentosConfig',
+    'app_antigo.apps.AppAntigoConfig',
     'registro_hora_extra.apps.RegistroHoraExtraConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,8 +89,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'antigo': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'dbantigo.sqlite3'
     }
 }
+
+# ROTAS BANCO DE DADOS:
+DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
+"""
+1 - NOME DO PROJETO DJANGO;
+2 - NOME DO ARQUIVO DE ROTA;
+3 - NOME DA CLASSE DEFINIDA NO ARQUIVO DE ROTAS.
+"""
 
 
 # Password validation
