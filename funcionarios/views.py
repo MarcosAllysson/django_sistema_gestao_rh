@@ -13,11 +13,22 @@ from reportlab.pdfgen import canvas
 from django.template.loader import get_template
 import xhtml2pdf.pisa as pisa
 
+# TRANSLATE
+from django.utils.translation import ugettext_lazy as _
+
 
 # Create your views here.
 class FuncionarioList(ListView):
     model = Funcionario
     template_name = 'funcionarios/list_funcionarios.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Usando com tradução
+        """
+        context = super().get_context_data(**kwargs)
+        context['report_button'] = _('Employee report')
+        return context
 
     def get_queryset(self):
         """

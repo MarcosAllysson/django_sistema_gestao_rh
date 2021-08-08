@@ -18,6 +18,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Internacionalização
+from django.conf.urls.i18n import i18n_patterns
+
 # Django rest framework
 from rest_framework import routers
 from core import views
@@ -34,6 +37,10 @@ router.register(r'api/horas-extras', RegistroHoraExtraViewSet)
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+urlpatterns += i18n_patterns (
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('funcionarios/', include('funcionarios.urls')),
@@ -46,7 +53,7 @@ urlpatterns = [
     # Django rest framework
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-]
+)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

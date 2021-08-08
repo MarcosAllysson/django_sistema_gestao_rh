@@ -8,7 +8,8 @@
 {% block main %}
     <h1 class="display-5"> Funcionários </h1>
     <a href="{% url 'create_funcionario' %}" class="btn btn-info"> Cadastrar funcionário </a>
-    <a href="{% url 'pdf_reportlab' %}" class="btn btn-primary"> Relatório funcionários </a>
+<!--    <a href="{% url 'pdf_reportlab' %}" class="btn btn-primary"> Relatório funcionários </a>-->
+    <a href="{% url 'pdf_reportlab' %}" class="btn btn-primary"> {{report_button}} </a>
     <a href="{% url 'pdf_xhtml' %}" class="btn btn-primary"> Relatório XHTML </a>
     <hr>
 

@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   Core
 {% endblock %}
 
 {% block main %}
-    <h1 class="display-5"> Gestão RH Core </h1>
+    <h1 class="display-5">
+        {% trans "Gestão RH Core" %}
+        {% blocktrans %}
+            <p> Meu bloco de texto inserido aqui usando juntamente com o blocktrans. </p>
+        {% endblocktrans %}
+    </h1>
+
     {% if usuario.is_authenticated %}
         <a href="{% url 'logout' %}"> Sair </a>
     {% else %}
@@ -14,7 +21,7 @@
     {% endif %}
 
     <hr>
-    <p>Usuário logado: {{usuario}} | {{usuario.funcionario.nome}} </p>
+    <p> {% trans "Usuário logado:" %} {{usuario}} | {{usuario.funcionario.nome}} </p>
     <a href="{% url 'list_funcionarios' %}"> Gerenciar Funcionário </a> <br>
     <a href="{% url 'list_departamentos' %}"> Gerenciar Departamentos </a> <br>
     <a href="{% url 'list_hora_extra' %}"> Gerenciar Registro Hora Extra </a> <br>
